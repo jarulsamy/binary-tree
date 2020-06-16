@@ -2,9 +2,9 @@
 cmake_minimum_required(VERSION 3.11...3.16)
 
 # Project name and a few useful settings. Other commands can pick up the results
-project(cpp-template
+project(Binary-Tree
     VERSION 0.1
-    DESCRIPTION "CPP Template"
+    DESCRIPTION "Binary Search Tree"
     LANGUAGES CXX)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
