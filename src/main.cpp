@@ -5,14 +5,14 @@
 #include "btree.hpp"
 #include "loader.hpp"
 
-using std::cin;
-using std::cout;
-using std::endl;
-
 int main(int argc, char **argv)
 {
     if (argc != 2)
-        cout << "Usage: ./btree.o FILENAME.txt" << endl;
+    {
+        std::cout << "Usage: ./btree.o FILENAME.txt" << std::endl;
+        return -1;
+    }
+
     std::deque<int> data = load(argv[1]);
 
     BTree<int> btree;
@@ -21,12 +21,10 @@ int main(int argc, char **argv)
     for (int i : data)
         btree.insert(i);
 
-    cout << "Enter a number to find: ";
-    cin >> buffer;
-    if (btree.find(buffer))
-        cout << "Found!" << endl;
-    else
-        cout << "Not found!" << endl;
-
+    std::deque<int> sorted_data = btree.dump();
+    for (int i : sorted_data)
+    {
+        std::cout << i << std::endl;
+    }
     return 0;
 }
