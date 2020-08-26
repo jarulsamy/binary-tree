@@ -84,6 +84,7 @@ int main(int argc, char **argv)
     {
         fprintf(fp, "%d\n", i);
     }
+    fclose(fp);
 
     return 0;
 }
