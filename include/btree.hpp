@@ -45,6 +45,7 @@ private:
         {
             destroy(node->right);
             destroy(node->left);
+            delete (node);
         }
     }
 
