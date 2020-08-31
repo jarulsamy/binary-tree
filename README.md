@@ -6,39 +6,76 @@ A simple binary search tree implementation in C++
 
 I got bored one night and thought that I would write a simple application demonstrating a binary search tree. This one specifically only works with integers, but can easily be expanded to more data types since most of the code is already templated.
 
+### Learning Concepts
+
+Some of the things this project helped me learn:
+
+* Pointers
+* Dynamic memory allocation
+* Recursion
+* Object oriented programming
+* `argp` Argument parsing
+* File IO
+
 ## Building
 
 Clone the and `cd` into the repository:
 
-    $ git clone https://github.com/jarulsamy/binary-tree
-    $ cd binary-tree
+```bash
+git clone https://github.com/jarulsamy/binary-tree
+cd binary-tree
+```
 
 Create a build directory:
 
-    $ mkdir build
-    $ cd build
+```bash
+mkdir build
+cd build
+```
 
 Generate the cmake build files
 
-    $ cmake ..
+```bash
+cmake ..
+```
 
 Finally, build:
 
-    $ make
+```bash
+make
+```
 
-The binary will be built to `build/bin/btree.o` 
+The binary will be built to `build/bin/btree.o`
 
 ### Usage
 
-    $  bin/btree.o ../data.txt
-    Enter a number to find: 8268
-    Found!
+Built-in help
 
-## Support
+```bash
+$ bin/btree.o --help
 
-Reach out to me at one of the following places!
+sage: btree.o [OPTION...] PATH_OF_INPUT_TXT
+A simple example of binary search trees.
 
-*   Email (Best) at joshua.gf.arul@gmail.com
-*   Twitter at <a href="http://twitter.com/jarulsamy_" target="_blank"> `@jarulsamy_` </a>
+  -o, --output=FILE          Output to FILE instead of standard output
+  -?, --help                 Give this help list
+      --usage                Give a short usage message
 
-* * *
+Mandatory or optional arguments to long options are also mandatory or optional
+for any corresponding short options.
+```
+
+Demo:
+
+```bash
+$ bin/btree.o ../data.txt
+26
+27
+31
+
+. . .
+
+9961
+9968
+9992
+```
