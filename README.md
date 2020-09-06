@@ -1,5 +1,7 @@
 # Binary-Tree
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/35db834923584e0eae1528cf54e33fc9)](https://app.codacy.com/manual/jarulsamy/binary-tree?utm_source=github.com&utm_medium=referral&utm_content=jarulsamy/binary-tree&utm_campaign=Badge_Grade_Dashboard)
+
 A simple binary search tree implementation in C++
 
 ## Rationale
