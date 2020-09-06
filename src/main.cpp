@@ -77,6 +77,7 @@ int main(int argc, char **argv)
     BTree<int> btree;
     for (int i : data)
         btree.insert(i);
+
     std::deque<int> sorted_data = btree.dump();
 
     // Write data to output
