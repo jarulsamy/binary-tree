@@ -1,105 +1,89 @@
-#pragma once
+#ifndef BTREE_HPP
+#define BTREE_HPP
 
-template <class T>
+#include <deque>
+
+template <typename T>
 class Node
 {
 public:
-    Node()
+    Node(T d)
     {
         left = nullptr;
         right = nullptr;
+        value = d;
     };
 
-    Node(T d)
-    {
-        Node();
-        data = d;
-    };
-
-    T data;
-    Node *left;
-    Node *right;
+    T value;
+    Node<T> *left;
+    Node<T> *right;
 };
 
-template <class T>
+template <typename T>
 class BTree
 {
+
 public:
-    BTree()
-    {
-        root = nullptr;
-        height = 0;
-    }
-    // ~BTree();
+    BTree() { root = nullptr; };
+    BTree(T r_value) { root = new Node<T>(r_value); }
+    ~BTree() { destroy(root); }
 
-    // Add a value to the tree using recursion.
-    void insert(T key, Node<T> *leaf)
-    {
+    void insert(T val) { insert(val, root); }
+    bool find(T val) { return find(val, root); }
 
-        if (key < leaf->data)
-        {
-            if (!leaf->left)
-            {
-                insert(key, leaf->left);
-            }
-            else
-            {
-                leaf->left = new Node<T>(key);
-                height++;
-            }
-        }
-        else if (key >= leaf->data)
-        {
-            if (!leaf->right)
-            {
-                insert(key, leaf->right);
-            }
-            else
-            {
-                leaf->right = new Node<T>(key);
-                height++;
-            }
-        }
-
-        return;
-    }
-
-    // Overloaded insert for recursion.
-    void insert(T key)
+    std::deque<T> dump()
     {
-        if (root)
-        {
-            insert(key, root);
-        }
-        else
-        {
-            root = new Node<T>(key);
-            height++;
-        }
-    }
-    // Binary search tree for value recursively.
-    Node<T> *find(T key, Node<T> *leaf)
-    {
-        if (leaf != nullptr)
-        {
-            if (key == leaf->data)
-                return leaf;
-            else if (key < leaf->data)
-                return find(key, leaf->left);
-            else
-                return find(key, leaf->right);
-        }
-        else
-            return nullptr;
-    }
-
-    // Overloaded search for recursion.
-    Node<T> *find(T key)
-    {
-        return find(key, root);
+        std::deque<T> result;
+        dump(result, root);
+        return result;
     }
 
 private:
+    void destroy(Node<T> *&node)
+    {
+        if (node)
+        {
+            destroy(node->right);
+            destroy(node->left);
+        }
+    }
+
+    void insert(T val, Node<T> *&node)
+    {
+        if (node == nullptr)
+            node = new Node<T>(val);
+        else if (val > node->value)
+            insert(val, node->right);
+        else if (val < node->value)
+            insert(val, node->left);
+    }
+
+    bool find(T val, Node<T> *&node)
+    {
+        if (node)
+        {
+            if (val == node->value)
+                return true;
+            else if (val > node->value)
+                return find(val, node->right);
+            else if (val < node->value)
+                return find(val, node->left);
+        }
+
+        return false;
+    }
+
+    void dump(std::deque<T> &buffer, Node<T> *&node)
+    {
+        if (node != nullptr)
+        {
+            dump(buffer, node->left);
+            buffer.push_back(node->value);
+            dump(buffer, node->right);
+        }
+    }
+
     Node<T> *root;
-    int height;
 };
+
+#endif
