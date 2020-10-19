@@ -1,7 +1,8 @@
-#include <iostream>
-#include <deque>
-#include <string>
 #include <argp.h>
+
+#include <deque>
+#include <iostream>
+#include <string>
 
 #include "btree.hpp"
 #include "loader.hpp"
@@ -14,39 +15,34 @@ static struct argp_option options[] = {
     {0},
 };
 
-struct arguments
-{
+struct arguments {
     char *args[1];
     std::string output_file;
 };
 
-static error_t parse_opt(int key, char *arg, struct argp_state *state)
-{
+static error_t parse_opt(int key, char *arg, struct argp_state *state) {
     struct arguments *arguments = (struct arguments *)state->input;
 
-    switch (key)
-    {
-    case 'o':
-        arguments->output_file = arg;
-        break;
+    switch (key) {
+        case 'o':
+            arguments->output_file = arg;
+            break;
 
-    case ARGP_KEY_ARG:
-        if (state->arg_num > 1)
-            /* Too many args */
-            /* Ignore unnecessary */
-            argp_usage(state);
-        arguments->args[state->arg_num] = arg;
-        break;
+        case ARGP_KEY_ARG:
+            if (state->arg_num > 1) /* Too many args */
+                /* Ignore unnecessary */
+                argp_usage(state);
+            arguments->args[state->arg_num] = arg;
+            break;
 
-    case ARGP_KEY_END:
-        if (state->arg_num < 1)
-            /* Not enough args */
-            /* Fail and quit */
-            argp_usage(state);
-        break;
+        case ARGP_KEY_END:
+            if (state->arg_num < 1) /* Not enough args */
+                /* Fail and quit */
+                argp_usage(state);
+            break;
 
-    default:
-        return ARGP_ERR_UNKNOWN;
+        default:
+            return ARGP_ERR_UNKNOWN;
     }
 
     return 0;
@@ -55,8 +51,7 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state)
 // Actual CLI parser
 static struct argp argp = {options, parse_opt, args_doc, doc};
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     FILE *fp;
 
     struct arguments arguments;
@@ -71,18 +66,12 @@ int main(int argc, char **argv)
         fp = fopen(arguments.output_file.c_str(), "w");
 
     // Grab data from txt file
-    std::deque<int> data = load(arguments.args[0]);
-
-    // Load then dump data from btree
-    BTree<int> btree;
-    for (int i : data)
-        btree.insert(i);
-
+    BTree<int> btree = load(arguments.args[0]);
+    // Dump to deque
     std::deque<int> sorted_data = btree.dump();
 
     // Write data to output
-    for (int i : sorted_data)
-    {
+    for (int i : sorted_data) {
         fprintf(fp, "%d\n", i);
     }
     fclose(fp);
