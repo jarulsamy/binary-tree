@@ -9,11 +9,9 @@
  * @tparam T some data to hold
  */
 template <typename T>
-class Node
-{
-public:
-    Node(T d) : value(d)
-    {
+class Node {
+   public:
+    Node(T d) : value(d) {
         left = nullptr;
         right = nullptr;
     };
@@ -30,37 +28,26 @@ public:
  * If not specified, is later created upon first insertion.
  */
 template <typename T>
-class BTree
-{
-
-public:
+class BTree {
+   public:
     /**
      * @brief Construct a new BTree object.
      * By default, the root is nullptr.
      *
      */
-    BTree()
-    {
-        root = nullptr;
-    };
+    BTree() { root = nullptr; };
     /**
      * @brief Construct a new BTree object.
      *
      * @param r_value Define the root value
      */
-    BTree(T r_value)
-    {
-        root = new Node<T>(r_value);
-    }
+    BTree(T r_value) { root = new Node<T>(r_value); }
     /**
      * @brief Destroy the BTree object.
      * Initiates a recursive function.
      *
      */
-    ~BTree()
-    {
-        destroy(root);
-    }
+    ~BTree() { destroy(root); }
 
     /**
      * @brief Insert a value into the tree,
@@ -85,23 +72,20 @@ public:
      *
      * @return std::deque<T>
      */
-    std::deque<T> dump()
-    {
+    std::deque<T> dump() {
         std::deque<T> result;
         dump(result, root);
         return result;
     }
 
-private:
+   private:
     /**
      * @brief Recursively delete subtrees
      * @short Delete right and left subtrees, then delete self.
      * @param node
      */
-    void destroy(Node<T> *&node)
-    {
-        if (node)
-        {
+    void destroy(Node<T> *&node) {
+        if (node) {
             destroy(node->right);
             destroy(node->left);
             delete (node);
@@ -116,8 +100,7 @@ private:
      * @param val Value to insert
      * @param node Root of subtree
      */
-    void insert(T val, Node<T> *&node)
-    {
+    void insert(T val, Node<T> *&node) {
         if (node == nullptr)
             node = new Node<T>(val);
         else if (val > node->value)
@@ -136,10 +119,8 @@ private:
      * @return true
      * @return false
      */
-    bool find(T val, Node<T> *&node)
-    {
-        if (node)
-        {
+    bool find(T val, Node<T> *&node) {
+        if (node) {
             if (val == node->value)
                 return true;
             else if (val > node->value)
@@ -159,10 +140,8 @@ private:
      * @param buffer Reference to output dequeue, carried to add values to
      * @param node Root of subtree
      */
-    void dump(std::deque<T> &buffer, Node<T> *&node)
-    {
-        if (node != nullptr)
-        {
+    void dump(std::deque<T> &buffer, Node<T> *&node) {
+        if (node != nullptr) {
             dump(buffer, node->left);
             buffer.push_back(node->value);
             dump(buffer, node->right);
